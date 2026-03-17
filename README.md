@@ -64,6 +64,32 @@ See the [Multi-Tool Integrations](#-multi-tool-integrations) section below for f
 
 ---
 
+## 📁 Repository Structure
+
+The repository contains **17 directories** organized as follows:
+
+| Directory | Contents |
+|-----------|----------|
+| [`academic/`](academic/) | 5 research-focused agents: anthropologist, geographer, historian, narratologist, psychologist |
+| [`design/`](design/) | 8 UX/UI and creative agents: brand guardian, image prompt engineer, inclusive visuals specialist, UI designer, UX architect, UX researcher, visual storyteller, whimsy injector |
+| [`engineering/`](engineering/) | 23 software development agents covering frontend, backend, mobile, AI, DevOps, security, data, embedded systems, and more |
+| [`examples/`](examples/) | 6 multi-agent workflow demonstrations: book chapter, landing page, startup MVP, spatial discovery, and memory-enabled pipelines |
+| [`game-development/`](game-development/) | 20 game dev agents organized by platform: Blender, Godot, Roblox Studio, Unity, and Unreal Engine, plus general game designer, level designer, narrative designer, technical artist, and audio engineer |
+| [`integrations/`](integrations/) | 12 files documenting how to use agents in 10 different tools: Aider, Antigravity, Claude Code, Cursor, Gemini CLI, GitHub Copilot, MCP Memory, OpenClaw, OpenCode, and Windsurf |
+| [`marketing/`](marketing/) | 27 marketing and growth agents covering SEO, social media, content creation, global platforms (Douyin, Xiaohongshu, Bilibili, Weibo, Kuaishou, Baidu, Zhihu), e-commerce, and more |
+| [`paid-media/`](paid-media/) | 7 advertising and paid acquisition agents: PPC, paid social, programmatic, creative strategy, search query analysis, tracking, and account auditing |
+| [`product/`](product/) | 5 product management agents: behavioral nudge engine, feedback synthesizer, product manager, sprint prioritizer, trend researcher |
+| [`project-management/`](project-management/) | 6 project coordination agents: experiment tracker, Jira workflow steward, project shepherd, studio operations, studio producer, senior project manager |
+| [`sales/`](sales/) | 8 sales and revenue agents: account strategist, coach, deal strategist, discovery coach, sales engineer, outbound strategist, pipeline analyst, proposal strategist |
+| [`scripts/`](scripts/) | 3 shell scripts for automation: `convert.sh` (converts agents to tool-specific formats), `install.sh` (interactive installation), `lint-agents.sh` (validation) |
+| [`spatial-computing/`](spatial-computing/) | 6 AR/VR/XR specialist agents |
+| [`specialized/`](specialized/) | 27 niche specialist agents covering unique domains such as blockchain, legal, supply chain, finance, and more |
+| [`strategy/`](strategy/) | 16 files for the NEXUS multi-agent orchestration framework: coordination workflows, phase-based playbooks (discovery → operate), scenario runbooks, and quick-start guides |
+| [`support/`](support/) | 6 business operations agents: analytics reporter, executive summary generator, finance tracker, infrastructure maintainer, legal compliance checker, support responder |
+| [`testing/`](testing/) | 8 QA and quality agents: accessibility auditor, API tester, evidence collector, performance benchmarker, reality checker, test results analyzer, tool evaluator, workflow optimizer |
+
+---
+
 ## 🎨 The Agency Roster
 
 ### 💻 Engineering Division
