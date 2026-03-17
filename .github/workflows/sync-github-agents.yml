@@ -1,0 +1,42 @@
+name: Sync GitHub Copilot Agents
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'academic/**'
+      - 'design/**'
+      - 'engineering/**'
+      - 'game-development/**'
+      - 'marketing/**'
+      - 'paid-media/**'
+      - 'product/**'
+      - 'project-management/**'
+      - 'sales/**'
+      - 'specialized/**'
+      - 'spatial-computing/**'
+      - 'support/**'
+      - 'testing/**'
+
+jobs:
+  sync:
+    name: Sync agents to .github/agents/
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate .github/agents/
+        run: |
+          chmod +x scripts/convert.sh
+          ./scripts/convert.sh --tool github-copilot
+
+      - name: Commit updated agents
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/agents/
+          git diff --cached --quiet || git commit -m "chore: sync .github/agents/ from source directories [skip ci]"
+          git push

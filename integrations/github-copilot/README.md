@@ -3,7 +3,22 @@
 The Agency works with GitHub Copilot out of the box. No conversion needed —
 agents use the existing `.md` + YAML frontmatter format.
 
-## Install
+## Repository-Level Agents
+
+All agents are available directly within this repository via `.github/agents/`.
+When you open this repo in VS Code with GitHub Copilot, you can use any agent
+immediately without any installation.
+
+To regenerate `.github/agents/` after adding or modifying agents:
+
+```bash
+./scripts/convert.sh --tool github-copilot
+```
+
+## User-Wide Install
+
+Install agents to your local GitHub Copilot agents directory so they are
+available across all your projects:
 
 ```bash
 # Copy all agents to your GitHub Copilot agents directories
