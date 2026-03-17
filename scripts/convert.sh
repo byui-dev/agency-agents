@@ -10,15 +10,16 @@
 #   ./scripts/convert.sh [--tool <name>] [--out <dir>] [--parallel] [--jobs N] [--help]
 #
 # Tools:
-#   antigravity  — Antigravity skill files (~/.gemini/antigravity/skills/)
-#   gemini-cli   — Gemini CLI extension (skills/ + gemini-extension.json)
-#   opencode     — OpenCode agent files (.opencode/agent/*.md)
-#   cursor       — Cursor rule files (.cursor/rules/*.mdc)
-#   aider        — Single CONVENTIONS.md for Aider
-#   windsurf     — Single .windsurfrules for Windsurf
-#   openclaw     — OpenClaw SOUL.md files (openclaw_workspace/<agent>/SOUL.md)
-#   qwen         — Qwen Code SubAgent files (~/.qwen/agents/*.md)
-#   all          — All tools (default)
+#   antigravity     — Antigravity skill files (~/.gemini/antigravity/skills/)
+#   gemini-cli      — Gemini CLI extension (skills/ + gemini-extension.json)
+#   github-copilot  — GitHub Copilot repo agents (.github/agents/*.md)
+#   opencode        — OpenCode agent files (.opencode/agent/*.md)
+#   cursor          — Cursor rule files (.cursor/rules/*.mdc)
+#   aider           — Single CONVENTIONS.md for Aider
+#   windsurf        — Single .windsurfrules for Windsurf
+#   openclaw        — OpenClaw SOUL.md files (openclaw_workspace/<agent>/SOUL.md)
+#   qwen            — Qwen Code SubAgent files (~/.qwen/agents/*.md)
+#   all             — All tools (default)
 #
 # Output is written to integrations/<tool>/ relative to the repo root.
 # This script never touches user config dirs — see install.sh for that.
@@ -104,6 +105,15 @@ slugify() {
 }
 
 # --- Per-tool converters ---
+
+convert_github_copilot() {
+  local file="$1"
+  local outdir outfile
+  outdir="$REPO_ROOT/.github/agents"
+  mkdir -p "$outdir"
+  outfile="$outdir/$(basename "$file")"
+  cp "$file" "$outfile"
+}
 
 convert_antigravity() {
   local file="$1"
@@ -464,14 +474,15 @@ run_conversions() {
       [[ -n "$name" ]] || continue
 
       case "$tool" in
-        antigravity) convert_antigravity "$file" ;;
-        gemini-cli)  convert_gemini_cli  "$file" ;;
-        opencode)    convert_opencode    "$file" ;;
-        cursor)      convert_cursor      "$file" ;;
-        openclaw)    convert_openclaw    "$file" ;;
-        qwen)        convert_qwen        "$file" ;;
-        aider)       accumulate_aider    "$file" ;;
-        windsurf)    accumulate_windsurf "$file" ;;
+        antigravity)    convert_antigravity    "$file" ;;
+        gemini-cli)     convert_gemini_cli     "$file" ;;
+        github-copilot) convert_github_copilot "$file" ;;
+        opencode)       convert_opencode       "$file" ;;
+        cursor)         convert_cursor         "$file" ;;
+        openclaw)       convert_openclaw       "$file" ;;
+        qwen)           convert_qwen           "$file" ;;
+        aider)          accumulate_aider       "$file" ;;
+        windsurf)       accumulate_windsurf    "$file" ;;
       esac
 
       (( count++ )) || true
@@ -500,7 +511,7 @@ main() {
     esac
   done
 
-  local valid_tools=("antigravity" "gemini-cli" "opencode" "cursor" "aider" "windsurf" "openclaw" "qwen" "all")
+  local valid_tools=("antigravity" "gemini-cli" "github-copilot" "opencode" "cursor" "aider" "windsurf" "openclaw" "qwen" "all")
   local valid=false
   for t in "${valid_tools[@]}"; do [[ "$t" == "$tool" ]] && valid=true && break; done
   if ! $valid; then
@@ -519,7 +530,7 @@ main() {
 
   local tools_to_run=()
   if [[ "$tool" == "all" ]]; then
-    tools_to_run=("antigravity" "gemini-cli" "opencode" "cursor" "aider" "windsurf" "openclaw" "qwen")
+    tools_to_run=("antigravity" "gemini-cli" "github-copilot" "opencode" "cursor" "aider" "windsurf" "openclaw" "qwen")
   else
     tools_to_run=("$tool")
   fi
@@ -530,7 +541,7 @@ main() {
 
   if $use_parallel && [[ "$tool" == "all" ]]; then
     # Tools that write to separate dirs can run in parallel; buffer output so each tool's output stays together
-    local parallel_tools=(antigravity gemini-cli opencode cursor openclaw qwen)
+    local parallel_tools=(antigravity gemini-cli github-copilot opencode cursor openclaw qwen)
     local parallel_out_dir
     parallel_out_dir="$(mktemp -d)"
     info "Converting: ${#parallel_tools[@]}/${n_tools} tools in parallel (output buffered per tool)..."
@@ -542,7 +553,7 @@ main() {
       [[ -f "$parallel_out_dir/$t" ]] && cat "$parallel_out_dir/$t"
     done
     rm -rf "$parallel_out_dir"
-    local idx=7
+    local idx=8
     for t in aider windsurf; do
       progress_bar "$idx" "$n_tools"
       printf "\n"
